@@ -1,0 +1,4 @@
+from pymake import *
+
+
+make()

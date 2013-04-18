@@ -30,6 +30,10 @@ class ScriptTestCase(unittest.TestCase):
                          ' second\n',
             output)
 
+    def test_empty_script(self):
+        self.assertEqual('error: no task specified\n',
+            self.run_script('empty.py'))
+
 
 if __name__ == '__main__':
     unittest.main()
