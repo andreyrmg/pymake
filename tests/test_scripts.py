@@ -10,6 +10,13 @@ class ScriptTestCase(unittest.TestCase):
             [sys.executable, osp.join('scripts', name)],
             stderr=subprocess.STDOUT, universal_newlines=True)
 
+    def run_script_with_error(self, name):
+        try:
+            self.run_script(name)
+            self.fail('script returned zero exit status')
+        except subprocess.CalledProcessError as e:
+            return e.output
+
     def test_hello(self):
         output = self.run_script('hello.py')
         self.assertEqual('Hello from pymake\n', output)
@@ -23,7 +30,7 @@ class ScriptTestCase(unittest.TestCase):
         self.assertEqual('Second task\n', output)
 
     def test_without_default_task(self):
-        output = self.run_script('without_default_task.py')
+        output = self.run_script_with_error('without_default_task.py')
         self.assertEqual('error: no task specified\n'
                          'existing task are:\n'
                          ' first\n'
@@ -32,7 +39,7 @@ class ScriptTestCase(unittest.TestCase):
 
     def test_empty_script(self):
         self.assertEqual('error: no task specified\n',
-            self.run_script('empty.py'))
+            self.run_script_with_error('empty.py'))
 
 
 if __name__ == '__main__':
