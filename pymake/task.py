@@ -1,3 +1,6 @@
+from .dispatch import catch
+
+
 class Task(object):
     def __init__(self, func, name, default):
         self._func = func
@@ -20,6 +23,9 @@ def task(*args, **kwargs):
     def task_func(func):
         from pymake import r
         task = Task(func, kwargs.get('name', None), kwargs.get('default', False))
-        r.add_task(task)
+        try:
+            r.add_task(task)
+        except Exception as e:
+            catch(e)
         return func
     return task_func(*args) if args else task_func

@@ -1,5 +1,5 @@
 import sys
-from .error import NoTaskSpecifiedError
+from .error import NoTaskSpecifiedError, DefaultTaskAlreadyExists
 
 
 def print_exception(e):
@@ -14,6 +14,9 @@ def catch(e):
             print('existing task are:', file=sys.stderr)
             for task in e.tasks:
                 print('', task.name, file=sys.stderr)
+    elif DefaultTaskAlreadyExists == t:
+        print('cannot add default task "{}": task "{}" already registered as '
+              'default'.format(e.second.name, e.first.name), file=sys.stderr)
     else:
         raise e
     sys.exit(1)

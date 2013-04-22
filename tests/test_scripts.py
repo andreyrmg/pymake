@@ -41,6 +41,12 @@ class ScriptTestCase(unittest.TestCase):
         self.assertEqual('error: no task specified\n',
             self.run_script_with_error('empty.py'))
 
+    def test_many_default_tasks(self):
+        self.assertEqual('error: default task already exists\n'
+                         'cannot add default task "second": task "first" '
+                         'already registered as default\n',
+            self.run_script_with_error('many_default_tasks.py'))
+
 
 if __name__ == '__main__':
     unittest.main()

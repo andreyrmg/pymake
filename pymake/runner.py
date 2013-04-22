@@ -1,4 +1,4 @@
-from .error import NoTaskSpecifiedError
+from .error import NoTaskSpecifiedError, DefaultTaskAlreadyExists
 
 
 class Runner(object):
@@ -19,6 +19,8 @@ class Runner(object):
     def add_task(self, task):
         self._tasks.append(task)
         if task.default:
+            if self._default_task:
+                raise DefaultTaskAlreadyExists(self._default_task, task)
             self._default_task = task
 
 
