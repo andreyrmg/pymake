@@ -1,7 +1,7 @@
 from pymake import *
 
 
-@task
+@task(default=True)
 def first():
     print("First task")
 
