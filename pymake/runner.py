@@ -36,4 +36,5 @@ class Runner(object):
         if deps:
             for dep in deps:
                 yield from self._taskdeps(dep)
-        yield task
+        if not task.executed:
+            yield task

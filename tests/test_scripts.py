@@ -53,6 +53,13 @@ class ScriptTestCase(unittest.TestCase):
                          'second task\n',
             self.run_script('two_dependent_tasks.py'))
 
+    def test_diamond_dependence(self):
+        self.assertEqual('first task\n'
+                         'second task\n'
+                         'third task\n'
+                         'fourth task\n',
+            self.run_script('diamond_dependent_tasks.py'))
+
 
 if __name__ == '__main__':
     unittest.main()

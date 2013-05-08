@@ -6,9 +6,11 @@ class Task(object):
         self._func = func
         self._name = name if name else func.__name__
         self._default = default
+        self._executed = False
 
     def run(self):
         self._func()
+        self._executed = True
 
     def __lt__(self, y):
         return self.name < y.name
@@ -20,6 +22,10 @@ class Task(object):
     @property
     def name(self):
         return self._name
+
+    @property
+    def executed(self):
+        return self._executed
 
 
 def task(*args, **kwargs):
