@@ -10,6 +10,9 @@ class Task(object):
     def run(self):
         self._func()
 
+    def __lt__(self, y):
+        return self.name < y.name
+
     @property
     def default(self):
         return self._default
@@ -24,7 +27,7 @@ def task(*args, **kwargs):
         from pymake import r
         task = Task(func, kwargs.get('name', None), kwargs.get('default', False))
         try:
-            r.add_task(task)
+            r.add_task(task, kwargs.get('depends', []))
         except Exception as e:
             catch(e)
         return func

@@ -5,6 +5,7 @@ import sys
 
 
 class ScriptTestCase(unittest.TestCase):
+
     def run_script(self, name):
         return subprocess.check_output(
             [sys.executable, osp.join('scripts', name)],
@@ -46,6 +47,11 @@ class ScriptTestCase(unittest.TestCase):
                          'cannot add default task "second": task "first" '
                          'already registered as default\n',
             self.run_script_with_error('many_default_tasks.py'))
+
+    def test_tasks_dependence(self):
+        self.assertEqual('first task\n'
+                         'second task\n',
+            self.run_script('two_dependent_tasks.py'))
 
 
 if __name__ == '__main__':

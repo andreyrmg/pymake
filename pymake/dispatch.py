@@ -12,7 +12,7 @@ def catch(e):
     if NoTaskSpecifiedError == t:
         if e.tasks:
             print('existing task are:', file=sys.stderr)
-            for task in e.tasks:
+            for task in sorted(e.tasks):
                 print('', task.name, file=sys.stderr)
     elif DefaultTaskAlreadyExists == t:
         print('cannot add default task "{}": task "{}" already registered as '
@@ -35,3 +35,4 @@ def run(task_name=None):
         try_catch(task_name)
     except Exception as e:
         print('uncaught exception:', e)
+        sys.exit(1)
