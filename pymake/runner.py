@@ -5,35 +5,35 @@ class Runner(object):
     def __init__(self):
         self._tasks = {}
         self._graph = {}
-        self._default_task = None
+        self._deftask = None
 
-    def run(self, task_name=None):
-        if task_name:
-            task = self._by_name(task_name)
+    def run(self, taskname=None):
+        if taskname:
+            task = self._byname(taskname)
         else:
-            if not self._default_task:
+            if not self._deftask:
                 raise NoTaskSpecifiedError(self._tasks.values())
-            task = self._default_task
-        for t in self._task_deps(task):
-            t.run()
+            task = self._deftask
+        for task in self._taskdeps(task):
+            task.run()
 
-    def add_task(self, task, depends):
+    def addtask(self, task, depends):
         self._tasks[task.name] = task
         if task.default:
-            if self._default_task:
-                raise DefaultTaskAlreadyExists(self._default_task, task)
-            self._default_task = task
+            if self._deftask:
+                raise DefaultTaskAlreadyExists(self._deftask, task)
+            self._deftask = task
         deps = []
-        for task_name in depends:
-            deps.append(self._by_name(task_name))
+        for taskname in depends:
+            deps.append(self._byname(taskname))
         self._graph[task] = deps
 
-    def _by_name(self, task_name):
-        return self._tasks[task_name]
+    def _byname(self, taskname):
+        return self._tasks[taskname]
 
-    def _task_deps(self, task):
+    def _taskdeps(self, task):
         deps = self._graph[task]
         if deps:
-            for d in deps:
-                yield from self._task_deps(d)
+            for dep in deps:
+                yield from self._taskdeps(dep)
         yield task

@@ -9,5 +9,5 @@ __ALL__ = ['task', 'make']
 r = Runner()
 
 
-def make(task_name=None):
-    run(task_name)
+def make(taskname=None):
+    run(taskname)

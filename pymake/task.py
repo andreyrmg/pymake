@@ -23,12 +23,12 @@ class Task(object):
 
 
 def task(*args, **kwargs):
-    def task_func(func):
+    def taskfunc(func):
         from pymake import r
         task = Task(func, kwargs.get('name', None), kwargs.get('default', False))
         try:
-            r.add_task(task, kwargs.get('depends', []))
+            r.addtask(task, kwargs.get('depends', []))
         except Exception as e:
             catch(e)
         return func
-    return task_func(*args) if args else task_func
+    return taskfunc(*args) if args else taskfunc

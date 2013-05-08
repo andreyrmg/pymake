@@ -2,12 +2,12 @@ import sys
 from .error import NoTaskSpecifiedError, DefaultTaskAlreadyExists
 
 
-def print_exception(e):
+def printexc(e):
     print('error:', e, file=sys.stderr)
 
 
 def catch(e):
-    print_exception(e)
+    printexc(e)
     t = type(e)
     if NoTaskSpecifiedError == t:
         if e.tasks:
@@ -22,17 +22,17 @@ def catch(e):
     sys.exit(1)
 
 
-def try_catch(task_name):
+def trycatch(taskname):
     try:
         from pymake import r
-        r.run(task_name)
+        r.run(taskname)
     except Exception as e:
         catch(e)
 
 
-def run(task_name=None):
+def run(taskname=None):
     try:
-        try_catch(task_name)
+        trycatch(taskname)
     except Exception as e:
         print('uncaught exception:', e)
         sys.exit(1)
